@@ -48,6 +48,15 @@ function filterByQuery(query, animalsArray) {
     return filteredResults;
 }
 
+//Function findById() that takes in the id and array of animals
+//Returns a single animal object
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+}
+
+
+
 //ROUTE FOR GET ANIMAL FILE REQUEST AND SEND RESPONSE
 //Information will return in a JSON format
 //Query for specific objects in the request
@@ -58,6 +67,17 @@ app.get('/api/animals', (req, res) => {
         results = filterByQuery(req.query, results);
     }
     res.json(results);
+});
+//GET route for one specific animal using req.params
+app.get ('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if (result) {
+        res.json(result); 
+     //if no record exists for animal being searched for, return
+    // a 404 error
+    } else {
+        res.send(404);
+    }         
 });
 //CHAIN THE LISTEN() METHOD ONTO THE SERVER
 app.listen(PORT, () => {
