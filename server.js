@@ -14,6 +14,9 @@ const express = require('express');
 //INSTANTIATE THE SERVER
 const app = express();
 
+//express.static method to include everything from public file
+app.use(express.static('public')); //can be accessed without specific server endpoint
+
 //parse incoming data from client over HTTP and convert into JSON object
 app.use(express.urlencoded({ extended: true })); //parse incoming string or array data
 app.use(express.json()); // parse incoming JSON data
@@ -144,7 +147,28 @@ app.post('/api/animals', (req, res) => {
     }
 });
 
+//Add HTML files -> no JSON data end-points, so no api reference
 
+//Route to GET the index.html file to display in the browser
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html')); 
+});
+
+//Route to GET animals.html file
+app.get('/animals', (req, res) => {  
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+//Route to GET zookeepers.html file
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+//wildcard route for requests to routes that do not exist
+//Should always be last 
+app.get('*', (req, res) => {  //'*' acts as a wild card for any route not previously defined
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
 
 //CHAIN THE LISTEN() METHOD ONTO THE SERVER
 app.listen(PORT, () => {
