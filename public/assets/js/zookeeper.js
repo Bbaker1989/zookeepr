@@ -59,6 +59,5 @@ const handleGetZookeepersSubmit = event => {
 
 //reference to the zookeeper form and add event listener
 const $zookeeperForm = document.querySelector("#zookeeper-form");
-
-//submist event listener to zookeeper form.
+ //submist event listener to zookeeper form.
 $zookeeperForm.addEventListener('submit', handleGetZookeepersSubmit);
